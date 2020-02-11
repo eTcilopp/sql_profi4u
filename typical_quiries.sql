@@ -33,10 +33,8 @@ WHERE rating_id >= 3;
 
 
 -- Messages history 
-SELECT DISTINCT projects.id, messages.created_at, from_user_id, to_user_id, sender.first_name, recipient.first_name, body
-FROM messages
-JOIN users AS sender ON sender.id = messages.from_user_id
-JOIN users AS recipient ON recipient.id = messages.to_user_id
-JOIN projects ON projects.creator_id = sender.id OR projects.creator_id = recipient.id
-WHERE projects.id = 7
-ORDER BY messages.created_at;
+-- Get message history for particulatr project (project id 7 in this example)
+call messages_history(55);
+
+-- available projects for contractor (contractor with id 101 in this example)
+call available_projects(101);
