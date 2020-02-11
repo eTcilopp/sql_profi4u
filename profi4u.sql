@@ -126,7 +126,8 @@ select
     `projects`.`id` AS `project_id`,
     `projects`.`status_id` AS `status_id`,
     `projects`.`description` AS `description`,
-    `projects`.`location_id` AS `location_id`
+    `projects`.`location_id` AS `location_id`,
+    `projects`.`category_id` AS `category_id`
 from
     `projects`
 where
@@ -163,6 +164,46 @@ left join `reviews` on
 
 -- Procedures
 -- MARK EXPIRED PROJECTS
-UPDATE projects
-SET status_id=4
-WHERE valid_until < NOW();
+DROP PROCEDURE IF EXISTS update_expired_orders;
+
+DELIMITER //
+CREATE PROCEDURE update_expired_orders()
+BEGIN
+	UPDATE projects SET status_id=4 WHERE valid_until < NOW();
+END //
+
+DELIMITER ;
+
+-- MESSAGE HISTORY BY PROJECT ID
+DROP PROCEDURE IF EXISTS messages_history ;
+
+DELIMITER //
+CREATE PROCEDURE messages_history(IN project_id INT)
+BEGIN
+	SELECT DISTINCT projects.id, messages.created_at, from_user_id, to_user_id, sender.first_name, recipient.first_name, body
+	FROM messages
+	JOIN users AS sender ON sender.id = messages.from_user_id
+	JOIN users AS recipient ON recipient.id = messages.to_user_id
+	JOIN projects ON projects.creator_id = sender.id OR projects.creator_id = recipient.id
+	WHERE projects.id = project_id
+	ORDER BY messages.created_at;
+END //
+
+DELIMITER ;
+
+-- get available projects for a contractor based on his or her skills and location
+
+DROP PROCEDURE IF EXISTS available_projects ;
+
+DELIMITER //
+CREATE PROCEDURE available_projects(IN requester_id INT)
+BEGIN
+	SELECT *
+	FROM view_available_projects
+	WHERE
+		location_id = (SELECT hometown_id FROM user_profiles up WHERE user_id = requester_id) AND
+		category_id = (SELECT category_id FROM skills WHERE skills.id =
+					(SELECT skill_id FROM contractor_skills WHERE contractor_id = requester_id));
+END //
+
+DELIMITER ;
