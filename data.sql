@@ -1,4 +1,4 @@
--- «‡ÔÓÎÌˇÂÏ Ú‡·ÎËˆÛ œ–ÓÂÍÚÓ‚
+-- –ó–∞–ø–æ–ª–Ω—è–µ–º —Ç–∞–±–ª–∏—Ü—É –ü–†–æ–µ–∫—Ç–æ–≤
 INSERT INTO hometowns (hometown)VALUES
 ('Moscow'),
 ('St. Petersburg'),
@@ -362,7 +362,7 @@ INSERT INTO messages (from_user_id, to_user_id, body) VALUES
 (107, 34, 'Hello?'),
 (34, 107, 'ZX Spectrum'),
 (322, 70, 'Hello, what kind of entertainment do you need?'),
-(70, 322, 'Hi doesnít matter please come and do it ASAP'),
+(70, 322, 'Hi doesn‚Äôt matter please come and do it ASAP'),
 (322, 70, 'OK. 150$ per 3 hours. 2 people: a clown and a princess'),
 (70, 322, 'Whatever. The address is Lenina, 17'),
 (322, 70, 'I`ll text You when I arrive'),
@@ -375,7 +375,7 @@ INSERT INTO messages (from_user_id, to_user_id, body) VALUES
 (4, 146, 'Yes, I am. Are you the one?'),
 (146, 4, 'Maybe ) Who is getting married?'),
 (4, 146, 'Actually this is for my dog. He`s getting married.'),
-(146, 4, 'Wow.. And who is theÖ. Other party?'),
+(146, 4, 'Wow.. And who is the‚Ä¶. Other party?'),
 (4, 146, 'My neighbour`s dog!'),
 (146, 4, 'Well, I think, I`m in! It will be 1500$'),
 (4, 146, 'Deal!'),
@@ -400,4 +400,7 @@ INSERT INTO messages (from_user_id, to_user_id, body) VALUES
 (333, 77, 'Hello! I`m a professinal party organizer. I can make your event unforgettable! Just call me!'),
 (333, 77, 'Hello!'),
 (333, 77, 'Hello?'),
-(333, 77, 'HelloÖ');
+(333, 77, 'Hello‚Ä¶');
+
+-- Updating order status for expired orders
+call update_expired_orders()
